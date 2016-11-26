@@ -1,0 +1,30 @@
+#!/bin/bash
+
+git-cdiff() {
+    width=-w$(expr "$(stty size | cut -d " " -f 2)" / 2)
+    env git diff $* | cdiff -s $width
+}
+
+git-cshow() {
+    width=-w$(expr "$(stty size | cut -d " " -f 2)" / 2)
+    env git show $* | cdiff -s $width
+}
+
+git() {
+    case "$1" in
+    di|diff|show)
+        env git $* | cdiff
+        ;;
+    df)
+        shift
+        git-cdiff "$@"
+        ;;
+    sw)
+        shift
+        git-cshow "$@"
+        ;;
+    *)
+        env git "$@"
+        ;;
+    esac
+}
