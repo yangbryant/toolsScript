@@ -1,0 +1,5 @@
+#!/bin/bash
+
+man2pdf() {
+    man -t "$@" | open -f -a /Applications/Preview.app/
+}
